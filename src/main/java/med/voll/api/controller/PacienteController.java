@@ -23,7 +23,7 @@ public class PacienteController {
     }
 
     @GetMapping
-    public Page<DatosListadoPaciente> listadoPacientes(@PageableDefault(size = 10, sort = "nombre") Pageable paginacion) {
+    public Page<DatosListadoPaciente> listadoPacientes(@PageableDefault(sort = "nombre") Pageable paginacion) {
         return pacienteRepository.findByActivoTrue(paginacion).map(DatosListadoPaciente::new);
     }
 

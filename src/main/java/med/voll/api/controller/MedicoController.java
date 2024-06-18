@@ -23,9 +23,9 @@ public class MedicoController {
     private MedicoRepository medicoRepository;
 
     @PostMapping
-    public ResponseEntity<DatosRespuestaMedico> registrarMedico(@RequestBody @Valid DatosRegistroMedico param, UriComponentsBuilder uriBuilder){
+    public ResponseEntity<DatosRespuestaPaciente> registrarMedico(@RequestBody @Valid DatosRegistroMedico param, UriComponentsBuilder uriBuilder){
         Medico medico =medicoRepository.save(new Medico(param));
-        DatosRespuestaMedico respuestaMedico = new DatosRespuestaMedico(medico.getId(),medico.getNombre(),
+        DatosRespuestaPaciente respuestaMedico = new DatosRespuestaPaciente(medico.getId(),medico.getNombre(),
                 medico.getEmail(), medico.getTelefono(), medico.getDocumento(),
                 new DatosDireccion(medico.getDireccion().getCalle(),
                         medico.getDireccion().getDistrito(), medico.getDireccion().getCiudad(),
@@ -42,10 +42,10 @@ public class MedicoController {
 
     @PutMapping
     @Transactional
-    public ResponseEntity<DatosRespuestaMedico> actualizarMedico(@RequestBody @Valid DatosActualizarMedico actualizarMedico){
+    public ResponseEntity<DatosRespuestaPaciente> actualizarMedico(@RequestBody @Valid DatosActualizarMedico actualizarMedico){
         Medico medico = medicoRepository.getReferenceById(actualizarMedico.id());
         medico.actualizarDatos(actualizarMedico);
-        return ResponseEntity.ok(new DatosRespuestaMedico(medico.getId(),medico.getNombre(),
+        return ResponseEntity.ok(new DatosRespuestaPaciente(medico.getId(),medico.getNombre(),
                 medico.getEmail(), medico.getTelefono(), medico.getDocumento(),
                 new DatosDireccion(medico.getDireccion().getCalle(),
                         medico.getDireccion().getDistrito(), medico.getDireccion().getCiudad(),
@@ -62,9 +62,9 @@ public class MedicoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<DatosRespuestaMedico> retornaDatosMedico(@PathVariable Long id) {
+    public ResponseEntity<DatosRespuestaPaciente> retornaDatosMedico(@PathVariable Long id) {
         Medico medico = medicoRepository.getReferenceById(id);
-        var data = new DatosRespuestaMedico(medico.getId(),medico.getNombre(),
+        var data = new DatosRespuestaPaciente(medico.getId(),medico.getNombre(),
                 medico.getEmail(), medico.getTelefono(), medico.getDocumento(),
                 new DatosDireccion(medico.getDireccion().getCalle(),
                         medico.getDireccion().getDistrito(), medico.getDireccion().getCiudad(),
